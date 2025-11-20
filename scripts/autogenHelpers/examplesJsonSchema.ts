@@ -1,10 +1,16 @@
+export type ExampleMetadata = {
+  title: string;
+  tags: string[];
+  docs: string;
+};
+
 export type ExampleGroupMetadata = {
   title: string;
 };
 
 export type Example = {
   name: string;
-  metadata?: {};
+  metadata: ExampleMetadata;
   fullPath: string;
   relPath: string;
 };
