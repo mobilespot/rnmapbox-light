@@ -21,16 +21,6 @@ updates:
       - dependency-name: "react"
       - dependency-name: "react-native"
       - dependency-name: "jest-cli"
-  # example
-  - package-ecosystem: "npm"
-    directory: "/example"
-    schedule:
-      interval: "monthly"
-    labels:
-      - "🤖 dependabot 🤖"
-    open-pull-requests-limit: 1
-    pull-request-branch-name:
-      separator: "-"
   # gh-actions workflow files
   - package-ecosystem: "github-actions"
     directory: "/"

@@ -39,7 +39,6 @@ android/gradlew.bat
 android/local.properties
 
 # rnmapbox/maps
-example
 __tests__
 coverage
 

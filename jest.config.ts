@@ -9,7 +9,6 @@ const config: Config = {
     './__tests__/__mocks__/react-native.mock.js',
   ],
   modulePathIgnorePatterns: [
-    'example',
     '__tests__/__mocks__',
     'fixtures',
     '<rootDir>/lib/',
