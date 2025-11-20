@@ -38,7 +38,6 @@
     "!**/.*"
   ],
   "scripts": {
-    "test": "yarn lint && yarn unittest",
     "typecheck": "tsc --noEmit",
     "lint": "yarn eslint .",
     "prepare": "bob build",
