@@ -20,8 +20,6 @@ import com.rnmapbox.rnmbx.components.camera.RNMBXViewportModule
 import com.rnmapbox.rnmbx.components.images.RNMBXImageManager
 import com.rnmapbox.rnmbx.components.images.RNMBXImageModule
 import com.rnmapbox.rnmbx.components.images.RNMBXImagesManager
-import com.rnmapbox.rnmbx.components.location.RNMBXCustomLocationProviderManager
-import com.rnmapbox.rnmbx.components.location.RNMBXNativeUserLocationManager
 import com.rnmapbox.rnmbx.components.mapview.NativeMapViewModule
 import com.rnmapbox.rnmbx.components.mapview.RNMBXMapViewManager
 import com.rnmapbox.rnmbx.components.styles.RNMBXStyleImportManager
@@ -45,7 +43,6 @@ import com.rnmapbox.rnmbx.components.styles.sources.RNMBXShapeSourceManager
 import com.rnmapbox.rnmbx.components.styles.sources.RNMBXShapeSourceModule
 import com.rnmapbox.rnmbx.components.styles.sources.RNMBXVectorSourceManager
 import com.rnmapbox.rnmbx.components.styles.terrain.RNMBXTerrainManager
-import com.rnmapbox.rnmbx.modules.RNMBXLocationModule
 import com.rnmapbox.rnmbx.modules.RNMBXLogging
 import com.rnmapbox.rnmbx.modules.RNMBXModule
 import com.rnmapbox.rnmbx.modules.RNMBXOfflineModule
@@ -91,7 +88,6 @@ class RNMBXPackage : TurboReactPackage() {
     ): NativeModule? {
         when (s) {
             RNMBXModule.REACT_CLASS -> return RNMBXModule(reactApplicationContext)
-            RNMBXLocationModule.REACT_CLASS -> return RNMBXLocationModule(reactApplicationContext)
             RNMBXOfflineModule.REACT_CLASS -> return RNMBXOfflineModule(reactApplicationContext)
             RNMBXTileStoreModule.REACT_CLASS -> return RNMBXTileStoreModule(reactApplicationContext)
             RNMBXOfflineModuleLegacy.REACT_CLASS -> return RNMBXOfflineModuleLegacy(reactApplicationContext)
@@ -129,8 +125,6 @@ class RNMBXPackage : TurboReactPackage() {
         managers.add(RNMBXMarkerViewContentManager(reactApplicationContext))
         managers.add(RNMBXPointAnnotationManager(reactApplicationContext, getViewTagResolver(reactApplicationContext, "RNMBXPointAnnotationManager")))
         managers.add(RNMBXCalloutManager())
-        managers.add(RNMBXNativeUserLocationManager())
-        managers.add(RNMBXCustomLocationProviderManager())
 
         // sources
         managers.add(RNMBXVectorSourceManager(reactApplicationContext))
@@ -176,15 +170,6 @@ class RNMBXPackage : TurboReactPackage() {
                 true,  // hasConstants
                 false,  // isCxxModule
                 false // isTurboModule
-            )
-            moduleInfos[RNMBXLocationModule.REACT_CLASS] = ReactModuleInfo(
-                RNMBXLocationModule.REACT_CLASS,
-                RNMBXLocationModule.REACT_CLASS,
-                false,  // canOverrideExistingModule
-                false,  // needsEagerInit
-                true,  // hasConstants
-                false,  // isCxxModule
-                isTurboModule // isTurboModule
             )
             moduleInfos[RNMBXOfflineModule.REACT_CLASS] = ReactModuleInfo(
                 RNMBXOfflineModule.REACT_CLASS,

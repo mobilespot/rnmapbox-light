@@ -54,8 +54,6 @@ class RNMBXModule : NSObject {
           "Round": LineJoin.round.rawValue,
           "Miter": LineJoin.miter.rawValue,
         ],
-      "LocationCallbackName":
-        ["Update": RCT_MAPBOX_USER_LOCATION_UPDATE],
       "CameraModes":
         [
           "Flight": CameraMode.flight.rawValue,

@@ -36,25 +36,18 @@ public class RNMBXCameraManagerDelegate<T extends View, U extends BaseViewManage
         mViewManager.setDefaultStop(view, new DynamicFromObject(value));
         break;
       case "userTrackingMode":
-        mViewManager.setUserTrackingMode(view, new DynamicFromObject(value));
         break;
       case "followUserLocation":
-        mViewManager.setFollowUserLocation(view, new DynamicFromObject(value));
         break;
       case "followUserMode":
-        mViewManager.setFollowUserMode(view, new DynamicFromObject(value));
         break;
       case "followZoomLevel":
-        mViewManager.setFollowZoomLevel(view, new DynamicFromObject(value));
         break;
       case "followPitch":
-        mViewManager.setFollowPitch(view, new DynamicFromObject(value));
         break;
       case "followHeading":
-        mViewManager.setFollowHeading(view, new DynamicFromObject(value));
         break;
       case "followPadding":
-        mViewManager.setFollowPadding(view, new DynamicFromObject(value));
         break;
       case "zoomLevel":
         mViewManager.setZoomLevel(view, new DynamicFromObject(value));

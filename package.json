@@ -3,11 +3,11 @@
   "version": "10.2.7",
   "description": "Community-supported, open-source React Native library for building maps using Mapbox native maps SDK for iOS and Android",
   "main": "./lib/module/index.js",
-  "types": "./lib/typescript/src/index.native.d.ts",
+  "types": "./lib/typescript/src/index.d.ts",
   "exports": {
     ".": {
       "source": "./src/index.ts",
-      "types": "./lib/typescript/src/index.native.d.ts",
+      "types": "./lib/typescript/src/index.d.ts",
       "default": "./lib/module/index.js"
     },
     "./package.json": "./package.json",
@@ -206,9 +206,6 @@
         "RNMBXCircleLayer": {
           "className": "RNMBXCircleLayerComponentView"
         },
-        "RNMBXCustomLocationProvider": {
-          "className": "RNMBXCustomLocationProviderComponentView"
-        },
         "RNMBXFillExtrusionLayer": {
           "className": "RNMBXFillExtrusionLayerComponentView"
         },
@@ -247,9 +244,6 @@
         },
         "RNMBXModels": {
           "className": "RNMBXModelsComponentView"
-        },
-        "RNMBXNativeUserLocation": {
-          "className": "RNMBXNativeUserLocationComponentView"
         },
         "RNMBXPointAnnotation": {
           "className": "RNMBXPointAnnotationComponentView"
@@ -291,7 +285,6 @@
         "RNMBXCallout": "RNMBXCalloutComponentView",
         "RNMBXCamera": "RNMBXCameraComponentView",
         "RNMBXCircleLayer": "RNMBXCircleLayerComponentView",
-        "RNMBXCustomLocationProvider": "RNMBXCustomLocationProviderComponentView",
         "RNMBXFillExtrusionLayer": "RNMBXFillExtrusionLayerComponentView",
         "RNMBXFillLayer": "RNMBXFillLayerComponentView",
         "RNMBXHeatmapLayer": "RNMBXHeatmapLayerComponentView",
@@ -305,7 +298,6 @@
         "RNMBXMarkerView": "RNMBXMarkerViewComponentView",
         "RNMBXModelLayer": "RNMBXModelLayerComponentView",
         "RNMBXModels": "RNMBXModelsComponentView",
-        "RNMBXNativeUserLocation": "RNMBXNativeUserLocationComponentView",
         "RNMBXPointAnnotation": "RNMBXPointAnnotationComponentView",
         "RNMBXRasterDemSource": "RNMBXRasterDemSourceComponentView",
         "RNMBXRasterLayer": "RNMBXRasterLayerComponentView",

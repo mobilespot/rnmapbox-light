@@ -60,8 +60,7 @@ class RNMBXCameraManager(private val mContext: ReactApplicationContext, val view
 
     @ReactProp(name = "userTrackingMode")
     override fun setUserTrackingMode(camera: RNMBXCamera, userTrackingMode: Dynamic) {
-        camera.setUserTrackingMode(userTrackingMode.asInt())
-        throw AssertionError("Unused code")
+        // no-op
     }
 
     @ReactProp(name = "zoomLevel")
@@ -81,37 +80,32 @@ class RNMBXCameraManager(private val mContext: ReactApplicationContext, val view
 
     @ReactProp(name = "followUserLocation")
     override fun setFollowUserLocation(camera: RNMBXCamera, value: Dynamic) {
-        camera.setFollowUserLocation(value.asBooleanOrNull())
+        // no-op
     }
 
     @ReactProp(name = "followUserMode")
     override fun setFollowUserMode(camera: RNMBXCamera, value: Dynamic) {
-        camera.setFollowUserMode(value.asStringOrNull())
+        // no-op
     }
 
     @ReactProp(name = "followZoomLevel")
     override fun setFollowZoomLevel(camera: RNMBXCamera, value: Dynamic) {
-        camera.setFollowZoomLevel(value.asDoubleOrNull())
+        // no-op
     }
 
     @ReactProp(name = "followPitch")
     override fun setFollowPitch(camera: RNMBXCamera, value: Dynamic) {
-        camera.setFollowPitch(value.asDoubleOrNull())
+        // no-op
     }
 
     @ReactProp(name = "followHeading")
     override fun setFollowHeading(camera: RNMBXCamera, value: Dynamic) {
-        camera.setFollowHeading(value.asDoubleOrNull())
+        // no-op
     }
 
     @ReactProp(name = "followPadding")
     override fun setFollowPadding(camera: RNMBXCamera, value: Dynamic) {
-        val mapValue = value.asMap()
-        if (mapValue == null) {
-            Logger.e("RNMBXCameraManager", "followPadding map is null")
-            return
-        }
-        camera.setFollowPadding(mapValue)
+        // no-op
     }
 
     @ReactProp(name = "maxBounds")

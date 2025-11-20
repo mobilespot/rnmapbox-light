@@ -65,10 +65,6 @@ enum CameraMode: Int {
   case none = 5
 }
 
-enum UserTrackingMode: String {
-  case none, compass, course, normal
-}
-
 struct CameraUpdateItem {
   var camera: CameraOptions
   var mode: CameraMode
@@ -207,42 +203,6 @@ open class RNMBXCamera : RNMBXMapAndMapViewComponentBase {
   
   @objc public var defaultStop: [String: Any]?
   
-  @objc public var followUserLocation : Bool = false {
-    didSet {
-      _updateCameraFromTrackingMode()
-    }
-  }
-  
-  @objc public var followUserMode: String? {
-    didSet {
-      _updateCameraFromTrackingMode()
-    }
-  }
-  
-  @objc public var followZoomLevel: NSNumber? {
-    didSet {
-      _updateCameraFromTrackingMode()
-    }
-  }
-  
-  @objc public var followPitch: NSNumber? {
-    didSet {
-      _updateCameraFromTrackingMode()
-    }
-  }
-  
-  @objc public var followHeading: NSNumber? {
-    didSet {
-      _updateCameraFromTrackingMode()
-    }
-  }
-  
-  @objc public var followPadding: NSDictionary? {
-    didSet {
-      _updateCameraFromTrackingMode()
-    }
-  }
-  
   @objc public var maxZoomLevel: NSNumber? {
     didSet { _updateMaxBounds() }
   }
@@ -250,8 +210,6 @@ open class RNMBXCamera : RNMBXMapAndMapViewComponentBase {
   @objc public var minZoomLevel: NSNumber? {
     didSet { _updateMaxBounds() }
   }
-  
-  @objc public var onUserTrackingModeChange: RCTBubblingEventBlock? = nil
   
   @objc public var stop: [String: Any]? {
     didSet {
@@ -276,20 +234,9 @@ open class RNMBXCamera : RNMBXMapAndMapViewComponentBase {
   // MARK: Update methods
 
   func _updateCameraFromJavascript() {
-    guard !followUserLocation else {
-      return
-    }
-    
     guard let stop = stop else {
       return
     }
-    
-    /*
-    V10 TODO
-    if let map = map, map.userTrackingMode != .none {
-      map.userTrackingMode = .none
-    }
-    */
 
     if let stops = stop["stops"] as? [[String:Any]] {
       stops.forEach {
@@ -306,10 +253,6 @@ open class RNMBXCamera : RNMBXMapAndMapViewComponentBase {
     if let map = map {
       cameraUpdateQueue.execute(map: map, cameraAnimator: &cameraAnimator)
     }
-  }
-  
-  func _disableUserTracking(_ map: MapView) {
-    map.viewport.idle()
   }
   
   @objc public func updateCameraStop(_ stop: [String: Any]) {
@@ -348,97 +291,6 @@ open class RNMBXCamera : RNMBXMapAndMapViewComponentBase {
       logged("RNMBXCamera._updateMaxBounds") {
         try map.mapboxMap.setCameraBounds(with: options)
       }
-    }
-  }
-
-  func _updateCameraFromTrackingMode() {
-    withMapView { map in
-      let userTrackingMode = UserTrackingMode(rawValue: self.followUserMode ?? UserTrackingMode.normal.rawValue)
-      guard let userTrackingMode = userTrackingMode else {
-        Logger.error("RNMBXCamera: Unexpected followUserMode \(optional: self.followUserMode)")
-        self._disableUserTracking(map)
-        return
-      }
-
-      guard self.followUserLocation && userTrackingMode != .none else {
-        self._disableUserTracking(map)
-        return
-      }
-
-      if let locationModule = RNMBXLocationModule.shared {
-        locationModule.override(for: map.location)
-      }
-      #if !RNMBX_11
-      map.location.locationProvider.requestWhenInUseAuthorization()
-      #endif
-      var trackingModeChanged = false
-      var followOptions = FollowPuckViewportStateOptions()
-      switch userTrackingMode {
-      case .none:
-        Logger.assert("RNMBXCamera, userTrackingModes should not be none here")
-      case .compass:
-        followOptions.bearing = FollowPuckViewportStateBearing.heading
-        trackingModeChanged = true
-      case .course:
-        followOptions.bearing = FollowPuckViewportStateBearing.course
-        trackingModeChanged = true
-      case .normal:
-        followOptions.bearing = nil
-        trackingModeChanged = true
-      }
-      
-      if let onUserTrackingModeChange = self.onUserTrackingModeChange {
-        if (trackingModeChanged) {
-          let event = RNMBXEvent(type: .onUserTrackingModeChange, payload: ["followUserMode": self.followUserMode ?? "normal", "followUserLocation": self.followUserLocation])
-          onUserTrackingModeChange(event.toJSON())
-        }
-      }
-      
-      if let zoom = self.followZoomLevel as? CGFloat {
-        if (zoom >= 0.0) {
-          followOptions.zoom = zoom
-        }
-      }
-      
-      if let followPitch = self.followPitch as? CGFloat {
-        if (followPitch >= 0.0) {
-          followOptions.pitch = followPitch
-        }
-      } else if let stopPitch = self.stop?["pitch"] as? CGFloat {
-        if (stopPitch >= 0.0) {
-          followOptions.pitch = stopPitch
-        }
-      } else {
-        followOptions.pitch = nil
-      }
-      
-      var _camera = CameraOptions()
-      
-      if let followHeading = self.followHeading as? CGFloat {
-        if (followHeading >= 0.0) {
-          _camera.bearing = followHeading
-        }
-      } else if let stopHeading = self.stop?["heading"] as? CGFloat {
-        if (stopHeading >= 0.0) {
-          _camera.bearing = stopHeading
-        }
-      }
-      
-      if let padding = self.followPadding {
-        let edgeInsets = UIEdgeInsets(
-          top: padding["paddingTop"] as? Double ?? 0,
-          left: padding["paddingLeft"] as? Double ?? 0,
-          bottom: padding["paddingBottom"] as? Double ?? 0,
-          right: padding["paddingRight"] as? Double ?? 0
-        )
-        followOptions.padding = edgeInsets
-      }
-      
-      let followState = map.viewport.makeFollowPuckViewportState(options: followOptions)
-      
-      map.viewport.transition(to: followState)
-      map.viewport.addStatusObserver(self)
-      map.mapboxMap.setCamera(to: _camera)
     }
   }
   
@@ -565,11 +417,7 @@ open class RNMBXCamera : RNMBXMapAndMapViewComponentBase {
   
   func _updateCamera() {
     if let _ = map {
-      if followUserLocation {
-        self._updateCameraFromTrackingMode()
-      } else {
-        self._updateCameraFromJavascript()
-      }
+      self._updateCameraFromJavascript()
     }
   }
   
@@ -679,47 +527,6 @@ extension RNMBXCamera : ViewportStatusObserver {
     }
   }
 
-  func toFollowUserLocation(_ status: ViewportStatus) -> Bool {
-    switch status {
-    case .idle:
-      return false
-    case .state(_):
-      return true
-    case .transition(_, toState: _):
-      return true
-    }
-  }
-
-  func toFollowUserMode(_ state: ViewportState) -> String? {
-    if let state = state as? FollowPuckViewportState {
-      switch state.options.bearing {
-      case .heading:
-        return "compass"
-      case .course:
-        return "course"
-      case .some(let bearing):
-        return "constant"
-      case .none:
-        return "normal"
-      }
-    } else if let state = state as? OverviewViewportState {
-      return "overview"
-    } else {
-      return "custom"
-    }
-  }
-
-  func toFollowUserMode(_ status: ViewportStatus) -> String? {
-    switch status {
-    case .idle:
-      return nil
-    case .state(let state):
-      return toFollowUserMode(state)
-    case .transition(_, toState: let state):
-      return toFollowUserMode(state)
-    }
-  }
-
   func toString(_ reason: ViewportStatusChangeReason) -> String {
     if reason == .idleRequested {
       return "idleRequested"
@@ -740,24 +547,7 @@ extension RNMBXCamera : ViewportStatusObserver {
                                to toStatus: ViewportStatus,
                                reason: ViewportStatusChangeReason)
   {
-    if (reason == .userInteraction) {
-      followUserLocation = toFollowUserLocation(toStatus)
 
-      if let onUserTrackingModeChange = onUserTrackingModeChange {
-        let event = RNMBXEvent(
-          type: .onUserTrackingModeChange,
-          payload: [
-            "followUserMode": toFollowUserMode(toStatus) as Any,
-            "followUserLocation": followUserLocation,
-            "fromViewportStatus": toDict(fromStatus),
-            "toViewportState": toDict(toStatus),
-            "reason": toString(reason)
-          ]
-        )
-
-        onUserTrackingModeChange(event.toJSON())
-      }
-    }
   }
 }
 
