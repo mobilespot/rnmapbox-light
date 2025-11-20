@@ -38,7 +38,6 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace @rnmapbox/maps-example",
     "test": "yarn lint && yarn unittest",
     "typecheck": "tsc --noEmit",
     "lint": "yarn eslint .",
@@ -52,7 +51,6 @@
     "lint:fix": "yarn eslint . --fix",
     "test:plugin": "yarn expo-module test plugin",
     "build:plugin": "yarn tsc --build plugin",
-    "build:examples.json": "cd example; jest __tests__/dumpExamplesJson.ts",
     "lint:plugin": "yarn eslint plugin/src/*",
     "build": "yarn bob build",
     "build:copy-plugin": "npx tsx plugin/copy-plugin.ts"
@@ -152,9 +150,7 @@
       "optional": true
     }
   },
-  "workspaces": [
-    "example"
-  ],
+  "workspaces": [],
   "resolutions": {
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0"

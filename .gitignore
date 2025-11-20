@@ -54,8 +54,6 @@ node_modules
 .nvm
 /bots/node_modules/
 package-lock.json
-/example/package-lock.json
-/example/yarn.lock
 
 # Yarn
 .yarn/*
@@ -67,7 +65,6 @@ package-lock.json
 
 # Expo
 .expo
-example/dist
 
 # Turborepo
 .turbo/

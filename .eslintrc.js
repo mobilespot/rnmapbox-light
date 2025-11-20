@@ -95,7 +95,6 @@ module.exports = {
   ignorePatterns: [
     '**/rnmapbox.web.symlink',
     'plugin/build/',
-    'example/dist',
     'node_modules/',
     'lib/',
   ],
@@ -107,7 +106,6 @@ module.exports = {
       parserOptions: {
         project: [
           './tsconfig.json',
-          './example/tsconfig.json',
           './scripts/tsconfig.json',
           './plugin/tsconfig.eslint.json',
           './plugin/src/__tests__/tsconfig.eslint.json',

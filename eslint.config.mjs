@@ -46,9 +46,6 @@ export default defineConfig([
       '.yarn/**',
       'plugin/build/**',
       'ios/build/**',
-      'example/ios/build/**',
-      'example/dist/**',
-      'example2/**',
     ],
   },
 ]);
