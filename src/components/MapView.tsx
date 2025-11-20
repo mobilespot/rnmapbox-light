@@ -25,7 +25,6 @@ import { getFilter } from '../utils/filterUtils';
 import Logger from '../utils/Logger';
 import type { FilterExpression } from '../utils/MapboxStyles';
 import { type Position } from '../types/Position';
-import { type Location } from '../modules/location/locationManager';
 
 import NativeBridgeComponent from './NativeBridgeComponent';
 
@@ -423,11 +422,6 @@ type Props = ViewProps & {
   onDidFinishRenderingMapFully?: () => void;
 
   /**
-   * This event is triggered when the user location is updated.
-   */
-  onUserLocationUpdate?: (feature: Location) => void;
-
-  /**
    * This event is triggered when a style has finished loading.
    */
   onDidFinishLoadingStyle?: () => void;
@@ -463,7 +457,6 @@ const CallbablePropKeys = [
   'onRegionWillChange',
   'onRegionIsChanging',
   'onRegionDidChange',
-  'onUserLocationUpdate',
   'onWillStartLoadingMap',
   'onMapLoadingError',
   'onDidFinishLoadingMap',
@@ -623,7 +616,6 @@ class MapView extends NativeBridgeComponent(
     addIfHasHandler('RegionWillChange');
     addIfHasHandler('RegionIsChanging');
     addIfHasHandler('RegionDidChange');
-    addIfHasHandler('UserLocationUpdate');
     addIfHasHandler('WillStartLoadingMap');
     addIfHasHandler('DidFinishLoadingMap');
     addIfHasHandler('MapLoadingError');
@@ -1110,9 +1102,6 @@ class MapView extends NativeBridgeComponent(
         break;
       case EventTypes.MapIdle:
         propName = 'onMapIdle';
-        break;
-      case EventTypes.UserLocationUpdated:
-        propName = 'onUserLocationUpdate';
         break;
       case EventTypes.WillStartLoadingMap:
         propName = 'onWillStartLoadingMap';

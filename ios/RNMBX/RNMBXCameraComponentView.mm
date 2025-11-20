@@ -45,24 +45,7 @@ using namespace facebook::react;
     
     __weak __typeof__(self) weakSelf = self;
 
-    [_view setOnUserTrackingModeChange:^(NSDictionary* event) {
-        __typeof__(self) strongSelf = weakSelf;
-
-        if (strongSelf != nullptr && strongSelf->_eventEmitter != nullptr) {
-            const auto [type, payload] = [RNMBXCameraComponentView stringifyEventData:event];
-            std::dynamic_pointer_cast<const facebook::react::RNMBXCameraEventEmitter>(strongSelf->_eventEmitter)->onUserTrackingModeChange({type, payload});
-          }
-    }];
   self.contentView = _view;
-}
-
-+ (facebook::react::RNMBXCameraEventEmitter::OnUserTrackingModeChange)stringifyEventData:(NSDictionary*)event {
-    std::string type = [event valueForKey:@"type"] == nil ? "" : std::string([[event valueForKey:@"type"] UTF8String]);
-    NSDictionary *payload = [event valueForKey:@"payload"];
-    BOOL followUserLocation = [[payload valueForKey:@"followUserLocation"] boolValue] ?: NO;
-    std::string followUserMode = [[payload valueForKey:@"followUserMode"] isKindOfClass:[NSString class]] ? std::string([[payload valueForKey:@"followUserMode"] UTF8String]): "";
-
-    return {type, {followUserLocation, followUserMode}};
 }
 
 #pragma mark - RCTComponentViewProtocol
@@ -91,30 +74,6 @@ using namespace facebook::react;
     id defaultStop = RNMBXConvertFollyDynamicToId(newViewProps.defaultStop);
     if (defaultStop != nil) {
         _view.defaultStop = defaultStop;
-    }
-    id followUserLocationDynamic = RNMBXConvertFollyDynamicToId(newViewProps.followUserLocation);
-    if (followUserLocationDynamic != nil) {
-        _view.followUserLocation = [followUserLocationDynamic boolValue];
-    }
-    id followUserMode = RNMBXConvertFollyDynamicToId(newViewProps.followUserMode);
-    if (followUserMode != nil) {
-        _view.followUserMode = followUserMode;
-    }
-    id followZoomLevel = RNMBXConvertFollyDynamicToId(newViewProps.followZoomLevel);
-    if (followZoomLevel != nil) {
-        _view.followZoomLevel = followZoomLevel;
-    }
-    id followPitch = RNMBXConvertFollyDynamicToId(newViewProps.followPitch);
-    if (followPitch != nil) {
-        _view.followPitch = followPitch;
-    }
-    id followHeading = RNMBXConvertFollyDynamicToId(newViewProps.followHeading);
-    if (followHeading != nil) {
-        _view.followHeading = followHeading;
-    }
-    id followPadding = RNMBXConvertFollyDynamicToId(newViewProps.followPadding);
-    if (followPadding != nil) {
-        _view.followPadding = followPadding;
     }
     id maxZoomLevel = RNMBXConvertFollyDynamicToId(newViewProps.maxZoomLevel);
     if (maxZoomLevel != nil) {

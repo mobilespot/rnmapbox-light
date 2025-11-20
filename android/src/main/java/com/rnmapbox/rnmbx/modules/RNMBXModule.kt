@@ -10,7 +10,6 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.rnmapbox.rnmbx.events.constants.EventTypes
 import com.rnmapbox.rnmbx.modules.RNMBXOfflineModule
-import com.rnmapbox.rnmbx.modules.RNMBXLocationModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableMap
@@ -67,7 +66,6 @@ class RNMBXModule(private val mReactContext: ReactApplicationContext) : ReactCon
         eventTypes["CameraChanged"] = EventTypes.CAMERA_CHANGED
         eventTypes["RegionDidChange"] = EventTypes.REGION_DID_CHANGE // deprecated
         eventTypes["MapIdle"] = EventTypes.MAP_IDLE
-        eventTypes["UserLocationUpdated"] = EventTypes.USER_LOCATION_UPDATED
         eventTypes["WillStartLoadingMap"] = EventTypes.WILL_START_LOADING_MAP
         eventTypes["DidFinishLoadingMap"] = EventTypes.DID_FINISH_LOADING_MAP
         eventTypes["DidFailLoadingMap"] = EventTypes.DID_FAIL_LOADING_MAP
@@ -110,9 +108,6 @@ class RNMBXModule(private val mReactContext: ReactApplicationContext) : ReactCon
         offlineModuleCallbackNames["Error"] = RNMBXOfflineModule.OFFLINE_ERROR
         offlineModuleCallbackNames["Progress"] = RNMBXOfflineModule.OFFLINE_PROGRESS
 
-        // location module callback names
-        val locationModuleCallbackNames: MutableMap<String, String> = HashMap()
-        locationModuleCallbackNames["Update"] = RNMBXLocationModule.LOCATION_UPDATE
         return MapBuilder.builder<String, Any>()
             // Deprecated: means v10 or later, always true. Will be removed in next major version.
             .put("MapboxV10", true)
@@ -123,7 +118,6 @@ class RNMBXModule(private val mReactContext: ReactApplicationContext) : ReactCon
             .put("LineJoin", lineJoin)
             .put("OfflinePackDownloadState", offlinePackDownloadStates)
             .put("OfflineCallbackName", offlineModuleCallbackNames)
-            .put("LocationCallbackName", locationModuleCallbackNames)
             .put("TileServers", tileServers)
             .put("Implementation", impl)
             .build()

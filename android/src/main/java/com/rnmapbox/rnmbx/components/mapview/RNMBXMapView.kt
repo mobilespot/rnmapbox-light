@@ -43,8 +43,6 @@ import com.rnmapbox.rnmbx.components.annotation.RNMBXMarkerViewManager
 import com.rnmapbox.rnmbx.components.annotation.RNMBXPointAnnotation
 import com.rnmapbox.rnmbx.components.camera.RNMBXCamera
 import com.rnmapbox.rnmbx.components.images.RNMBXImages
-import com.rnmapbox.rnmbx.components.location.LocationComponentManager
-import com.rnmapbox.rnmbx.components.location.RNMBXNativeUserLocation
 import com.rnmapbox.rnmbx.components.mapview.helpers.CameraChangeReason
 import com.rnmapbox.rnmbx.components.mapview.helpers.CameraChangeTracker
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXLayer
@@ -190,7 +188,6 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
     private var styleLoaded = false
 
     private var mHandledMapChangedEvents: HashSet<String>? = null
-    private var mLocationComponentManager: LocationComponentManager? = null
     var tintColor: Int? = null
         private set
 
@@ -373,8 +370,6 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
             feature = childView
         } else if (childView is RNMBXTerrain) {
             feature = childView as AbstractMapFeature?
-        } else if (childView is RNMBXNativeUserLocation) {
-            feature = childView
         } else if (childView is RNMBXPointAnnotation) {
             val annotation = childView
             pointAnnotations.add(annotation)
@@ -894,24 +889,9 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
         )
     }
 
-    val locationComponentManager: LocationComponentManager
-        get() {
-            if (mLocationComponentManager == null) {
-                mLocationComponentManager = LocationComponentManager(this, mContext)
-            }
-            return mLocationComponentManager!!
-        }
-
     fun getMapAsync(mapReady: OnMapReadyCallback) {
         mapReady.onMapReady(mapView.getMapboxMap())
     }
-
-    //fun setTintColor(color: Int) {
-    //    tintColor = color
-    //    if (mLocationComponentManager != null) {
-    //        mLocationComponentManager.tintColorChanged()
-    //    }
-    //}
 
     // region Methods
 
@@ -1174,7 +1154,6 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
         }
         return when (layer) {
             is BackgroundLayer -> false
-            is LocationIndicatorLayer -> false
             is SkyLayer -> false
             is CircleLayer -> match(layer.sourceId, layer.sourceLayer)
             is FillExtrusionLayer -> match(layer.sourceId, layer.sourceLayer)
@@ -1548,7 +1527,6 @@ open class RNMBXMapView(private val mContext: Context, var mManager: RNMBXMapVie
         this.removeOnLayoutChangeListener(this)
         removeAllFeaturesFromMap(RemovalReason.ON_DESTROY)
         mapView.viewAnnotationManager.removeAllViewAnnotations()
-        mLocationComponentManager?.onDestroy();
 
         lifecycle.onDestroy()
         super.onDestroy()

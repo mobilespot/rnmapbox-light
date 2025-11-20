@@ -1,5 +1,4 @@
 #import <CoreFoundation/CoreFoundation.h>
-#import <CoreLocation/CoreLocation.h>
 
 #import <React/RCTComponent.h>
 

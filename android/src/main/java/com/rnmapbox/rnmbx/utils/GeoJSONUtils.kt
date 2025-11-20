@@ -1,7 +1,5 @@
 package com.rnmapbox.rnmbx.utils
 
-import android.location.Location
-import android.location.LocationManager
 import com.facebook.react.bridge.*
 import com.rnmapbox.rnmbx.utils.GeoJSONUtils
 import com.mapbox.geojson.*
@@ -216,22 +214,6 @@ object GeoJSONUtils {
         return if (point == null) {
             doubleArrayOf(0.0, 0.0)
         } else doubleArrayOf(point.longitude(), point.latitude())
-    }
-
-    @JvmStatic
-    fun toPoint(location: Location): Point {
-        return Point.fromLngLat(location.longitude, location.latitude)
-    }
-
-    @JvmStatic
-    fun toLocation(point: Point): Location {
-        val result = Location(LocationManager.GPS_PROVIDER)
-        result.latitude = point.latitude()
-        result.longitude = point.longitude()
-        if (point.hasAltitude()) {
-            result.altitude = point.altitude()
-        }
-        return result
     }
 
     const val LOG_TAG = "GeoJSONUtils"
