@@ -43,7 +43,6 @@
     "prepare": "bob build",
     "type:check": "yarn tsc --noEmit",
     "fetch:style:spec": ". ./scripts/download-style-spec.sh",
-    "generate": "node ./scripts/autogenerate.mjs",
     "unittest": "yarn jest",
     "unittest:single": "yarn jest --testNamePattern",
     "lint:fix": "yarn eslint . --fix",
