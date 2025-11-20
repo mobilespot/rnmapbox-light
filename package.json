@@ -40,7 +40,7 @@
     "test": "yarn lint && yarn unittest",
     "typecheck": "tsc --noEmit",
     "lint": "yarn eslint .",
-    "prepare": "yarn bob build",
+    "prepare": "bob build",
     "type:check": "yarn tsc --noEmit",
     "fetch:style:spec": ". ./scripts/download-style-spec.sh",
     "generate": "node ./scripts/autogenerate.mjs",
@@ -50,7 +50,7 @@
     "test:plugin": "yarn expo-module test plugin",
     "build:plugin": "yarn tsc --build plugin",
     "lint:plugin": "yarn eslint plugin/src/*",
-    "build": "yarn bob build",
+    "build": "bob build",
     "build:copy-plugin": "npx tsx plugin/copy-plugin.ts"
   },
   "keywords": [
