@@ -38,7 +38,8 @@
     "!**/.*"
   ],
   "scripts": {
-    "prepare": "bob build"
+    "prepare": "bob build",
+    "build:copy-plugin": "npx tsx plugin/copy-plugin.ts"
   },
   "keywords": [
     "ios",
