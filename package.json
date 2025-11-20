@@ -37,15 +37,12 @@
     "!**/.*"
   ],
   "scripts": {
-    "test": "yarn lint && yarn unittest",
     "typecheck": "tsc --noEmit",
     "lint": "yarn eslint .",
     "prepare": "bob build",
     "type:check": "yarn tsc --noEmit",
     "fetch:style:spec": ". ./scripts/download-style-spec.sh",
     "generate": "node ./scripts/autogenerate.mjs",
-    "unittest": "yarn jest",
-    "unittest:single": "yarn jest --testNamePattern",
     "lint:fix": "yarn eslint . --fix",
     "test:plugin": "yarn expo-module test plugin",
     "build:plugin": "yarn tsc --build plugin",
