@@ -4,6 +4,7 @@ export type ExampleGroupMetadata = {
 
 export type Example = {
   name: string;
+  metadata?: {};
   fullPath: string;
   relPath: string;
 };
