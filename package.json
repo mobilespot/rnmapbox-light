@@ -80,6 +80,7 @@
     "@types/debounce": "^1.2.1",
     "@types/jest": "^29.5.14",
     "@types/mapbox-gl": "^3.4.1",
+    "@types/mapbox__point-geometry": "^0.1.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "@types/react-test-renderer": "^19.1.0",
@@ -136,7 +137,6 @@
       "optional": true
     }
   },
-  "workspaces": [],
   "resolutions": {
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0"
