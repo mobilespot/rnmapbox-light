@@ -2,29 +2,18 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "@rnmapbox/maps": [
-        "./src/index"
-      ]
+      "@rnmapbox/maps": ["./src/index"]
     },
     "allowJs": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "customConditions": [
-      "react-native-strict-api"
-    ],
+    "customConditions": ["react-native-strict-api"],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ESNext"],
     "module": "ESNext",
-    "moduleSuffixes": [
-      ".native",
-      ""
-    ],
+    "moduleSuffixes": [".native", ""],
     "moduleResolution": "bundler",
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
@@ -37,16 +26,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext",
-    "types": [
-      "jest",
-      "react",
-      "react-dom"
-    ],
+    "target": "ESNext"
     // TODO: Re-enable verbatimModuleSyntax and fix type-only imports (217 errors)
     // "verbatimModuleSyntax": true
   },
-  "exclude": [
-    "**/*.codepart.ts"
-  ]
+  "exclude": ["**/*.codepart.ts"]
 }
