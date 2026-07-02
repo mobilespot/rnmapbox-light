@@ -1,4 +1,4 @@
 {
   "extends": "./tsconfig",
-  "exclude": ["lib", "tryout"]
+  "exclude": ["lib", "tryout", "example", "temp-issue-3909"]
 }

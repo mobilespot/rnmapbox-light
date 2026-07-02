@@ -1,4 +1,3 @@
-#ifdef RCT_NEW_ARCH_ENABLED
 
 #import "RNMBXCameraComponentView.h"
 #import "RNMBXFabricHelpers.h"
@@ -107,4 +106,3 @@ Class<RCTComponentViewProtocol> RNMBXCameraCls(void)
   return RNMBXCameraComponentView.class;
 }
 
-#endif // RCT_NEW_ARCH_ENABLED

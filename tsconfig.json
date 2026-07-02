@@ -15,6 +15,7 @@
     "module": "ESNext",
     "moduleSuffixes": [".native", ""],
     "moduleResolution": "bundler",
+    "typeRoots": ["./src/types", "./node_modules/@types"],
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
@@ -30,5 +31,5 @@
     // TODO: Re-enable verbatimModuleSyntax and fix type-only imports (217 errors)
     // "verbatimModuleSyntax": true
   },
-  "exclude": ["**/*.codepart.ts"]
+  "exclude": ["**/*.codepart.ts", "example", "temp-issue-3909"]
 }
