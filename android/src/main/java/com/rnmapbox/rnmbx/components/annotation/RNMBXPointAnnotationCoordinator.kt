@@ -24,7 +24,7 @@ class RNMBXPointAnnotationCoordinator(val mapView: MapView) {
     val callouts: MutableMap<String, RNMBXPointAnnotation> = hashMapOf()
 
     init {
-        manager = mapView.annotations.createPointAnnotationManager(AnnotationConfig(layerId = "RNMBX-mapview-annotations"))
+        manager = mapView.annotations.createPointAnnotationManager(AnnotationConfig("RNMBX-mapview-annotations"))
         manager.addClickListener(OnPointAnnotationClickListener { pointAnnotation ->
             onAnnotationClick(pointAnnotation)
             false
