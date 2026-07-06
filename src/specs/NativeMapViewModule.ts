@@ -71,6 +71,6 @@ export interface Spec extends TurboModule {
   ) => Promise<Object>;
 }
 
-const nativeModule = TurboModuleRegistry.getEnforcing<any>('RNMBXMapViewModule');
+const nativeModule = TurboModuleRegistry.getEnforcing<Spec>('RNMBXMapViewModule');
 
-export default nativeModule;
+export default nativeModule as Spec;
