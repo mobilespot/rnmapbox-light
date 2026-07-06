@@ -142,12 +142,7 @@ NativeModules.RNMBXSnapshotModule = {
   },
 };
 
-NativeModules.RNMBXLocationModule = nativeModule({
-  getLastKnownLocation: jest.fn(),
-  start: jest.fn(),
-  pause: jest.fn(),
-  stop: jest.fn(),
-});
+// Location native module mock intentionally omitted after no-geoloc refactor.
 
 NativeModules.RNMBXMapViewModule = {
   takeSnap: jest.fn(),

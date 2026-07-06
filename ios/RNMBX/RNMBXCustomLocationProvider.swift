@@ -77,20 +77,12 @@ extension RNMBXCustomLocationProvider {
         applyCoordinate()
       }
 
-      if let locationModule = RNMBXLocationModule.shared {
-        locationModule.locationProvider = customLocationProvider
-        locationModule.override(for: mapView.location)
-      }
-
       mapView.location.override(locationProvider: customLocationProvider, headingProvider: customLocationProvider)
     }
   }
 
   func removeCustomLocationProvider(mapView: MapView) {
     mapView.location.override(provider: AppleLocationProvider())
-    if let locationModule = RNMBXLocationModule.shared {
-      locationModule.locationProvider = AppleLocationProvider()
-    }
     customLocationProvider = nil
   }
 
