@@ -27,6 +27,7 @@ import com.rnmapbox.rnmbx.components.styles.RNMBXStyleImportManager
 import com.rnmapbox.rnmbx.components.styles.atmosphere.RNMBXAtmosphereManager
 import com.rnmapbox.rnmbx.components.styles.snow.RNMBXSnowManager
 import com.rnmapbox.rnmbx.components.styles.rain.RNMBXRainManager
+import com.rnmapbox.rnmbx.events.RNMBXCameraGestureObserverManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXBackgroundLayerManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXCircleLayerManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXFillExtrusionLayerManager
