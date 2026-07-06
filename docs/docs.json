@@ -1563,30 +1563,6 @@
       }
     ]
   },
-  "CustomLocationProvider": {
-    "description": "",
-    "displayName": "CustomLocationProvider",
-    "methods": [],
-    "props": [
-      {
-        "name": "coordinate",
-        "required": false,
-        "type": "Position",
-        "default": "none",
-        "description": "longitude and latitude to use for the custom location provider that gets applied to the NativeUserLocation"
-      },
-      {
-        "name": "heading",
-        "required": false,
-        "type": "number",
-        "default": "none",
-        "description": "heading/bearing to use for custom location provider that gets applied to the NativeUserLocation"
-      }
-    ],
-    "fileNameWithExt": "CustomLocationProvider.tsx",
-    "relPath": "src/components/CustomLocationProvider.tsx",
-    "name": "CustomLocationProvider"
-  },
   "FillExtrusionLayer": {
     "description": "FillExtrusionLayer is a style layer that renders one or more 3D extruded polygons on the map.",
     "displayName": "FillExtrusionLayer",
