@@ -34,6 +34,17 @@ describe('LocationManager', () => {
       jest.clearAllMocks();
     });
 
+    test('does not throw when the native location module is unavailable', () => {
+      const locationManagerModule = require('../../../src/modules/location/locationManager');
+      const nativeModule = NativeModules.RNMBXLocationModule;
+
+      NativeModules.RNMBXLocationModule = undefined;
+
+      expect(() => locationManagerModule.default.start()).not.toThrow();
+
+      NativeModules.RNMBXLocationModule = nativeModule;
+    });
+
     describe('#getLastKnownLocation', () => {
       test('gets last known location from native locationManager if non available', async () => {
         jest
