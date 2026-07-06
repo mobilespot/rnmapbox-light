@@ -2,7 +2,7 @@ import { promises } from 'fs';
 import path from 'path';
 
 import {
-  ConfigPlugin,
+  type ConfigPlugin,
   createRunOncePlugin,
   withDangerousMod,
   withGradleProperties,
@@ -15,7 +15,7 @@ import {
   mergeContents,
   createGeneratedHeaderComment,
   removeGeneratedContents,
-  MergeResults,
+  type MergeResults,
 } from './generateCode';
 
 let pkg: { name: string; version?: string } = {
@@ -37,6 +37,9 @@ export type MapboxPlugProps = {
 
   RNMapboxMapsVersion?: string;
 
+  /**
+   * @deprecated Download token is no longer required by Mapbox. Do not set this.
+   */
   RNMapboxMapsDownloadToken?: string;
 
   RNMapboxMapsUseV11?: boolean;
@@ -247,7 +250,11 @@ const withAndroidPropertiesDownloadToken: ConfigPlugin<MapboxPlugProps> = (
 
 const withAndroidPropertiesImpl2: ConfigPlugin<MapboxPlugProps> = (
   config,
-  { RNMapboxMapsImpl, RNMapboxMapsVersion, RNMapboxMapsUseV11 }: MapboxPlugProps = {},
+  {
+    RNMapboxMapsImpl,
+    RNMapboxMapsVersion,
+    RNMapboxMapsUseV11,
+  }: MapboxPlugProps = {},
 ) => {
   const keyValues = {
     expoRNMapboxMapsImpl: RNMapboxMapsImpl,
@@ -391,7 +398,10 @@ export const addMapboxMavenRepo = (src: string): string =>
     comment: '//',
   }).contents;
 
-const withAndroidAppGradle: ConfigPlugin<MapboxPlugProps> = (config, _props: MapboxPlugProps = {}) =>
+const withAndroidAppGradle: ConfigPlugin<MapboxPlugProps> = (
+  config,
+  _props: MapboxPlugProps = {},
+) =>
   withAppBuildGradle(config, ({ modResults, ...exportedConfig }) => {
     if (modResults.language !== 'groovy') {
       WarningAggregator.addWarningAndroid(
@@ -407,7 +417,10 @@ const withAndroidAppGradle: ConfigPlugin<MapboxPlugProps> = (config, _props: Map
     return { modResults, ...exportedConfig };
   });
 
-const withAndroidProjectGradle: ConfigPlugin<MapboxPlugProps> = (config, _props: MapboxPlugProps = {}) =>
+const withAndroidProjectGradle: ConfigPlugin<MapboxPlugProps> = (
+  config,
+  _props: MapboxPlugProps = {},
+) =>
   withProjectBuildGradle(config, ({ modResults, ...exportedConfig }) => {
     if (modResults.language !== 'groovy') {
       WarningAggregator.addWarningAndroid(

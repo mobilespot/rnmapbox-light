@@ -264,6 +264,20 @@
     "examples": [
       {
         "metadata": {
+          "title": "Camera Gesture Observer",
+          "tags": [
+            "CameraGestureObserver#onMapSteady",
+            "CameraGestureObserver#quietPeriodMs",
+            "CameraGestureObserver#maxIntervalMs"
+          ],
+          "docs": "\nDemonstrates how to detect when the map becomes steady after user gestures (pan, zoom, rotate). The CameraGestureObserver component fires the onMapSteady event after a configurable quiet period, providing information about the last gesture type and idle duration.\n"
+        },
+        "fullPath": "example/src/examples/Map/CameraGestureObserver.tsx",
+        "relPath": "Map/CameraGestureObserver.tsx",
+        "name": "CameraGestureObserver"
+      },
+      {
+        "metadata": {
           "title": "Change Layer Color",
           "tags": [
             "FillLayer#existing",
@@ -363,6 +377,23 @@
         "fullPath": "example/src/examples/Map/PointInMapView.js",
         "relPath": "Map/PointInMapView.js",
         "name": "PointInMapView"
+      },
+      {
+        "metadata": {
+          "title": "Screen Coordinates",
+          "tags": [
+            "MapView#onPress",
+            "MapView#onLongPress",
+            "MapView#getCoordinateFromView",
+            "MapView#getPointInView",
+            "MapView#queryRenderedFeaturesAtPoint",
+            "MapView#queryRenderedFeaturesInRect"
+          ],
+          "docs": "\nTests conversion from screen to geographic coordinates and vice versa.        \n"
+        },
+        "fullPath": "example/src/examples/Map/ScreenCoordinates.tsx",
+        "relPath": "Map/ScreenCoordinates.tsx",
+        "name": "ScreenCoordinates"
       },
       {
         "metadata": {
@@ -571,9 +602,11 @@
             "RasterDemSource",
             "Terrain",
             "Atmosphere",
-            "SkyLayer"
+            "SkyLayer",
+            "Snow",
+            "Rain"
           ],
-          "docs": "\nDemostrates use of Terrain, Atmosphere and SkyLayer.\n"
+          "docs": "\nDemonstrates use of Terrain, Atmosphere and SkyLayer. Use the Snow/Rain buttons to toggle experimental particle weather effects.\n"
         },
         "fullPath": "example/src/examples/V10/TerrainSkyAtmosphere.tsx",
         "relPath": "V10/TerrainSkyAtmosphere.tsx",
@@ -617,9 +650,12 @@
           "title": "Marker View",
           "tags": [
             "PointAnnotation",
-            "MarkerView"
+            "MarkerView",
+            "Slider",
+            "Interactive",
+            "pointerEvents"
           ],
-          "docs": "\nShows marker view and point annotations\n"
+          "docs": "\nShows marker view and point annotations, including an interactive marker with\nsliders, switch, counter, text input, and pressable button to verify complex\ntouch interactions inside a MarkerView. Toggle pointerEvents=\"none\" to make\nthe marker transparent to all touch events, passing them through to the map.\n"
         },
         "fullPath": "example/src/examples/Annotations/MarkerView.tsx",
         "relPath": "Annotations/MarkerView.tsx",
@@ -636,6 +672,34 @@
         "fullPath": "example/src/examples/Annotations/PointAnnotationAnchors.js",
         "relPath": "Annotations/PointAnnotationAnchors.js",
         "name": "PointAnnotationAnchors"
+      },
+      {
+        "metadata": {
+          "title": "PointAnnotationManager Multiple",
+          "tags": [
+            "PointAnnotationManager",
+            "PointAnnotation",
+            "slot"
+          ],
+          "docs": "\nDemonstrates multiple PointAnnotationManager instances, each owning its own\nannotation layer in a different slot of the Mapbox Standard style. The bottom-slot\npins (B) render behind the 3D buildings while the top-slot pins (T) render in front.\n  "
+        },
+        "fullPath": "example/src/examples/Annotations/PointAnnotationManagerMultiple.tsx",
+        "relPath": "Annotations/PointAnnotationManagerMultiple.tsx",
+        "name": "PointAnnotationManagerMultiple"
+      },
+      {
+        "metadata": {
+          "title": "PointAnnotationManager Slot",
+          "tags": [
+            "PointAnnotationManager",
+            "PointAnnotation",
+            "slot"
+          ],
+          "docs": "\nDemonstrates using PointAnnotationManager to position annotations\nin different slots of the Mapbox Standard style.\n  "
+        },
+        "fullPath": "example/src/examples/Annotations/PointAnnotationManagerSlot.tsx",
+        "relPath": "Annotations/PointAnnotationManagerSlot.tsx",
+        "name": "PointAnnotationManagerSlot"
       },
       {
         "metadata": {
@@ -697,12 +761,26 @@
       },
       {
         "metadata": {
+          "title": "Hillshade Layer",
+          "tags": [
+            "RasterDemSource",
+            "HillshadeLayer"
+          ],
+          "docs": "Renders terrain hillshading from a raster-dem source."
+        },
+        "fullPath": "example/src/examples/FillRasterLayer/HillshadeSource.tsx",
+        "relPath": "FillRasterLayer/HillshadeSource.tsx",
+        "name": "HillshadeSource"
+      },
+      {
+        "metadata": {
           "title": "Image Overlay",
           "tags": [
             "RasterLayer",
             "ImageSource"
           ],
-          "docs": ""
+          "docs": "",
+          "disableSync": true
         },
         "fullPath": "example/src/examples/FillRasterLayer/ImageOverlay.js",
         "relPath": "FillRasterLayer/ImageOverlay.js",

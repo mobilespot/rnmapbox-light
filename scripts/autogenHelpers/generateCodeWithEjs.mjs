@@ -166,11 +166,16 @@ function getSupportedLayers(layerNames) {
       support.basic.v10.android = true;
       support.basic.v10.ios = true;
     }
-    if (support.basic.v10.android && support.basic.v10.ios) {
+
+    const hasV10Support = support.basic.v10.android && support.basic.v10.ios;
+    const hasV11Support = support.basic.v11.android && support.basic.v11.ios;
+
+    if (hasV10Support || hasV11Support) {
       supportedLayers.push({
         layerName,
         support: {
-          v10: support.basic.v10.android && support.basic.v10.ios,
+          v10: hasV10Support,
+          v11: hasV11Support,
         },
       });
     }
@@ -183,6 +188,9 @@ function getSupportedLayers(layerNames) {
  * @param {string[]|null} only
  */
 function getSupportedProperties(attributes, only) {
+  if (!attributes) {
+    return [];
+  }
   return Object.keys(attributes).filter((attrName) =>
     isAttrSupported(attrName, attributes[attrName], only),
   );
@@ -311,14 +319,15 @@ function isTranslate(attrName) {
 }
 
 const UnsupportedProperties = [
-  'hillshade-emissive-strength', // should be supported in v11 according to specs but it's not on ios 11.0.0.rc2
+  'raster-particle-elevation', // should be supported in v11 11.7.0 but it's not yet implemented in SDK
 
-  'icon-color-contrast', // should be supported in v11 11.15.2 but it's not on android
+  'raster-elevation-reference', // spec says ios 11.19.0 but not present in SDK 11.23.1
+];
 
-  'icon-color-brightness-min', // should be supported in v11 11.15.0 but it's not on android
-  'icon-color-brightness-max', // should be supported in v11 11.15.0 but it's not on android
-
-  'fill-extrusion-cast-shadows', // should be supported in v11 11.8.0 but it's not on android
+// Properties marked as private in the style-spec but supported by native SDKs
+const AllowedPrivateProperties = [
+  'line-border-width',
+  'line-border-color',
 ];
 
 /**
@@ -330,7 +339,7 @@ function isAttrSupported(name, attr, only) {
     return false;
   }
   const support = getAttributeSupport(attr['sdk-support']);
-  if (attr.private === true) {
+  if (attr.private === true && !AllowedPrivateProperties.includes(name)) {
     return false;
   }
   if (only != null) {
@@ -338,7 +347,10 @@ function isAttrSupported(name, attr, only) {
       only.find((o) => support.basic[o].android && support.basic[o].ios) != null
     );
   }
-  return support.basic.v10.android && support.basic.v10.ios;
+  // Support both v10 and v11-only properties
+  const hasV10Support = support.basic.v10.android && support.basic.v10.ios;
+  const hasV11Support = support.basic.v11.android && support.basic.v11.ios;
+  return hasV10Support || hasV11Support;
 }
 
 function getAttributeSupport(sdkSupport) {
@@ -430,6 +442,10 @@ export function getLayers() {
 
   getSupportedLayers(Object.keys(styleSpecJSON.layer.type.values)).forEach(
     ({ layerName, support }) => {
+      // Skip slot and clip layers - no React Native components implemented yet
+      if (layerName === 'slot' || layerName === 'clip') {
+        return;
+      }
       layers.push({
         name: layerName,
         properties: getPropertiesForLayer(layerName),
@@ -462,6 +478,26 @@ export function getLayers() {
       ),
     },
     support: { v10: true },
+  });
+
+  // add snow as a layer
+  layers.push({
+    name: 'snow',
+    properties: getPropertiesFor('snow'),
+    props: {
+      v11: getPropertiesFor('snow'),
+    },
+    support: { v11: true },
+  });
+
+  // add rain as a layer
+  layers.push({
+    name: 'rain',
+    properties: getPropertiesFor('rain'),
+    props: {
+      v11: getPropertiesFor('rain'),
+    },
+    support: { v11: true },
   });
 
   // add terrain as a layer

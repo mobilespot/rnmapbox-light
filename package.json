@@ -1,6 +1,6 @@
 {
   "name": "@rnmapbox/maps",
-  "version": "10.2.7",
+  "version": "10.3.2",
   "description": "Community-supported, open-source React Native library for building maps using Mapbox native maps SDK for iOS and Android",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.native.d.ts",
@@ -11,7 +11,8 @@
       "default": "./lib/module/index.js"
     },
     "./package.json": "./package.json",
-    "./app.plugin.js": "./app.plugin.js"
+    "./app.plugin.js": "./app.plugin.js",
+    "./setup-jest": "./setup-jest.js"
   },
   "files": [
     "src",
@@ -47,6 +48,7 @@
     "generate": "node ./scripts/autogenerate.mjs",
     "unittest": "yarn jest",
     "unittest:single": "yarn jest --testNamePattern",
+    "precommit": "yarn lint && yarn typecheck",
     "lint:fix": "yarn eslint . --fix",
     "test:plugin": "yarn expo-module test plugin",
     "build:plugin": "yarn tsc --build plugin",
@@ -73,8 +75,8 @@
   },
   "homepage": "https://github.com/rnmapbox/maps#readme",
   "mapbox": {
-    "ios": "~> 11.16.2",
-    "android": "11.16.2"
+    "ios": "~> 11.23.1",
+    "android": "11.23.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -114,7 +116,7 @@
     "node-dir": "0.1.17",
     "prettier": "^3.6.2",
     "react": "19.1.0",
-    "react-docgen": "rnmapbox/react-docgen#rnmapbox-dist-react-docgen-v6",
+    "react-docgen": "rnmapbox/react-docgen#rnmapbox-dist-react-docgen-v8",
     "react-native": "0.81.1",
     "react-native-builder-bob": "^0.40.13",
     "react-test-renderer": "19.1.0",
@@ -137,7 +139,7 @@
     "mapbox-gl": "^2.9.0",
     "react": ">=17.0.0",
     "react-dom": ">= 17.0.0",
-    "react-native": ">=0.69"
+    "react-native": ">=0.79"
   },
   "peerDependenciesMeta": {
     "expo": {
@@ -200,6 +202,9 @@
         "RNMBXCallout": {
           "className": "RNMBXCalloutComponentView"
         },
+        "RNMBXCameraGestureObserver": {
+          "className": "RNMBXCameraGestureObserverComponentView"
+        },
         "RNMBXCamera": {
           "className": "RNMBXCameraComponentView"
         },
@@ -217,6 +222,9 @@
         },
         "RNMBXHeatmapLayer": {
           "className": "RNMBXHeatmapLayerComponentView"
+        },
+        "RNMBXHillshadeLayer": {
+          "className": "RNMBXHillshadeLayerComponentView"
         },
         "RNMBXImage": {
           "className": "RNMBXImageComponentView"
@@ -251,14 +259,26 @@
         "RNMBXNativeUserLocation": {
           "className": "RNMBXNativeUserLocationComponentView"
         },
+        "RNMBXPointAnnotationManager": {
+          "className": "RNMBXPointAnnotationManagerComponentView"
+        },
         "RNMBXPointAnnotation": {
           "className": "RNMBXPointAnnotationComponentView"
+        },
+        "RNMBXRain": {
+          "className": "RNMBXRainComponentView"
+        },
+        "RNMBXRasterArraySource": {
+          "className": "RNMBXRasterArraySourceComponentView"
         },
         "RNMBXRasterDemSource": {
           "className": "RNMBXRasterDemSourceComponentView"
         },
         "RNMBXRasterLayer": {
           "className": "RNMBXRasterLayerComponentView"
+        },
+        "RNMBXRasterParticleLayer": {
+          "className": "RNMBXRasterParticleLayerComponentView"
         },
         "RNMBXRasterSource": {
           "className": "RNMBXRasterSourceComponentView"
@@ -268,6 +288,9 @@
         },
         "RNMBXSkyLayer": {
           "className": "RNMBXSkyLayerComponentView"
+        },
+        "RNMBXSnow": {
+          "className": "RNMBXSnowComponentView"
         },
         "RNMBXStyleImport": {
           "className": "RNMBXStyleImportComponentView"
@@ -289,12 +312,14 @@
         "RNMBXAtmosphere": "RNMBXAtmosphereComponentView",
         "RNMBXBackgroundLayer": "RNMBXBackgroundLayerComponentView",
         "RNMBXCallout": "RNMBXCalloutComponentView",
+        "RNMBXCameraGestureObserver": "RNMBXCameraGestureObserverComponentView",
         "RNMBXCamera": "RNMBXCameraComponentView",
         "RNMBXCircleLayer": "RNMBXCircleLayerComponentView",
         "RNMBXCustomLocationProvider": "RNMBXCustomLocationProviderComponentView",
         "RNMBXFillExtrusionLayer": "RNMBXFillExtrusionLayerComponentView",
         "RNMBXFillLayer": "RNMBXFillLayerComponentView",
         "RNMBXHeatmapLayer": "RNMBXHeatmapLayerComponentView",
+        "RNMBXHillshadeLayer": "RNMBXHillshadeLayerComponentView",
         "RNMBXImage": "RNMBXImageComponentView",
         "RNMBXImageSource": "RNMBXImageSourceComponentView",
         "RNMBXImages": "RNMBXImagesComponentView",
@@ -306,12 +331,17 @@
         "RNMBXModelLayer": "RNMBXModelLayerComponentView",
         "RNMBXModels": "RNMBXModelsComponentView",
         "RNMBXNativeUserLocation": "RNMBXNativeUserLocationComponentView",
+        "RNMBXPointAnnotationManager": "RNMBXPointAnnotationManagerComponentView",
         "RNMBXPointAnnotation": "RNMBXPointAnnotationComponentView",
+        "RNMBXRain": "RNMBXRainComponentView",
+        "RNMBXRasterArraySource": "RNMBXRasterArraySourceComponentView",
         "RNMBXRasterDemSource": "RNMBXRasterDemSourceComponentView",
         "RNMBXRasterLayer": "RNMBXRasterLayerComponentView",
+        "RNMBXRasterParticleLayer": "RNMBXRasterParticleLayerComponentView",
         "RNMBXRasterSource": "RNMBXRasterSourceComponentView",
         "RNMBXShapeSource": "RNMBXShapeSourceComponentView",
         "RNMBXSkyLayer": "RNMBXSkyLayerComponentView",
+        "RNMBXSnow": "RNMBXSnowComponentView",
         "RNMBXStyleImport": "RNMBXStyleImportComponentView",
         "RNMBXSymbolLayer": "RNMBXSymbolLayerComponentView",
         "RNMBXTerrain": "RNMBXTerrainComponentView",

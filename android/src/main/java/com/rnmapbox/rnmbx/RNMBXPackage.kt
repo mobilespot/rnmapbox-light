@@ -11,6 +11,7 @@ import com.rnmapbox.rnmbx.components.annotation.RNMBXCalloutManager
 import com.rnmapbox.rnmbx.components.annotation.RNMBXMarkerViewContentManager
 import com.rnmapbox.rnmbx.components.annotation.RNMBXMarkerViewManager
 import com.rnmapbox.rnmbx.components.annotation.RNMBXPointAnnotationManager
+import com.rnmapbox.rnmbx.components.annotation.RNMBXPointAnnotationManagerViewManager
 import com.rnmapbox.rnmbx.components.annotation.RNMBXPointAnnotationModule
 import com.rnmapbox.rnmbx.components.camera.RNMBXCameraManager
 import com.rnmapbox.rnmbx.components.camera.RNMBXCameraModule
@@ -26,25 +27,31 @@ import com.rnmapbox.rnmbx.components.mapview.NativeMapViewModule
 import com.rnmapbox.rnmbx.components.mapview.RNMBXMapViewManager
 import com.rnmapbox.rnmbx.components.styles.RNMBXStyleImportManager
 import com.rnmapbox.rnmbx.components.styles.atmosphere.RNMBXAtmosphereManager
+import com.rnmapbox.rnmbx.components.styles.snow.RNMBXSnowManager
+import com.rnmapbox.rnmbx.components.styles.rain.RNMBXRainManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXBackgroundLayerManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXCircleLayerManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXFillExtrusionLayerManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXFillLayerManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXHeatmapLayerManager
+import com.rnmapbox.rnmbx.components.styles.layers.RNMBXHillshadeLayerManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXLineLayerManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXModelLayerManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXRasterLayerManager
+import com.rnmapbox.rnmbx.components.styles.layers.RNMBXRasterParticleLayerManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXSkyLayerManager
 import com.rnmapbox.rnmbx.components.styles.layers.RNMBXSymbolLayerManager
 import com.rnmapbox.rnmbx.components.styles.light.RNMBXLightManager
 import com.rnmapbox.rnmbx.components.styles.model.RNMBXModelsManager
 import com.rnmapbox.rnmbx.components.styles.sources.RNMBXImageSourceManager
+import com.rnmapbox.rnmbx.components.styles.sources.RNMBXRasterArraySourceManager
 import com.rnmapbox.rnmbx.components.styles.sources.RNMBXRasterDemSourceManager
 import com.rnmapbox.rnmbx.components.styles.sources.RNMBXRasterSourceManager
 import com.rnmapbox.rnmbx.components.styles.sources.RNMBXShapeSourceManager
 import com.rnmapbox.rnmbx.components.styles.sources.RNMBXShapeSourceModule
 import com.rnmapbox.rnmbx.components.styles.sources.RNMBXVectorSourceManager
 import com.rnmapbox.rnmbx.components.styles.terrain.RNMBXTerrainManager
+import com.rnmapbox.rnmbx.events.RNMBXCameraGestureObserverManager
 import com.rnmapbox.rnmbx.modules.RNMBXLocationModule
 import com.rnmapbox.rnmbx.modules.RNMBXLogging
 import com.rnmapbox.rnmbx.modules.RNMBXModule
@@ -123,11 +130,13 @@ class RNMBXPackage : TurboReactPackage() {
         managers.add(RNMBXMapViewManager(reactApplicationContext, getViewTagResolver(reactApplicationContext, "RNMBXMapViewManager")))
         managers.add(RNMBXStyleImportManager(reactApplicationContext))
         managers.add(RNMBXModelsManager(reactApplicationContext))
+        managers.add(RNMBXCameraGestureObserverManager(reactApplicationContext))
 
         // annotations
         managers.add(RNMBXMarkerViewManager(reactApplicationContext))
         managers.add(RNMBXMarkerViewContentManager(reactApplicationContext))
         managers.add(RNMBXPointAnnotationManager(reactApplicationContext, getViewTagResolver(reactApplicationContext, "RNMBXPointAnnotationManager")))
+        managers.add(RNMBXPointAnnotationManagerViewManager(reactApplicationContext))
         managers.add(RNMBXCalloutManager())
         managers.add(RNMBXNativeUserLocationManager())
         managers.add(RNMBXCustomLocationProviderManager())
@@ -140,6 +149,9 @@ class RNMBXPackage : TurboReactPackage() {
             ))
         managers.add(RNMBXRasterDemSourceManager(reactApplicationContext))
         managers.add(RNMBXRasterSourceManager(reactApplicationContext))
+        if (RNMBXRasterArraySourceManager.isImplemented) {
+            managers.add(RNMBXRasterArraySourceManager(reactApplicationContext))
+        }
         managers.add(RNMBXImageSourceManager())
 
         // images
@@ -154,9 +166,15 @@ class RNMBXPackage : TurboReactPackage() {
         managers.add(RNMBXCircleLayerManager())
         managers.add(RNMBXSymbolLayerManager())
         managers.add(RNMBXRasterLayerManager())
+        managers.add(RNMBXHillshadeLayerManager())
+        if (RNMBXRasterParticleLayerManager.isImplemented) {
+            managers.add(RNMBXRasterParticleLayerManager())
+        }
         managers.add(RNMBXSkyLayerManager())
         managers.add(RNMBXTerrainManager())
         managers.add(RNMBXAtmosphereManager())
+        managers.add(RNMBXSnowManager())
+        managers.add(RNMBXRainManager())
         managers.add(RNMBXBackgroundLayerManager())
         managers.add(RNMBXLightManager())
         managers.add(RNMBXModelLayerManager())
@@ -167,7 +185,6 @@ class RNMBXPackage : TurboReactPackage() {
         resetViewTagResolver()
         return ReactModuleInfoProvider {
             val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
-            val isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
             moduleInfos[RNMBXModule.REACT_CLASS] = ReactModuleInfo(
                 RNMBXModule.REACT_CLASS,
                 RNMBXModule.REACT_CLASS,
@@ -184,7 +201,7 @@ class RNMBXPackage : TurboReactPackage() {
                 false,  // needsEagerInit
                 true,  // hasConstants
                 false,  // isCxxModule
-                isTurboModule // isTurboModule
+                true // isTurboModule
             )
             moduleInfos[RNMBXOfflineModule.REACT_CLASS] = ReactModuleInfo(
                 RNMBXOfflineModule.REACT_CLASS,
@@ -238,7 +255,7 @@ class RNMBXPackage : TurboReactPackage() {
                 false,  // needsEagerInit
                 false,  // hasConstants
                 false,  // isCxxModule
-                isTurboModule // isTurboModule
+                true // isTurboModule
             )
             moduleInfos[RNMBXViewportModule.NAME] = ReactModuleInfo(
                 RNMBXViewportModule.NAME,
@@ -247,7 +264,7 @@ class RNMBXPackage : TurboReactPackage() {
                 false,  // needsEagerInit
                 false,  // hasConstants
                 false,  // isCxxModule
-                isTurboModule // isTurboModule
+                true // isTurboModule
             )
             moduleInfos[RNMBXCameraModule.NAME] = ReactModuleInfo(
                 RNMBXCameraModule.NAME,
@@ -256,7 +273,7 @@ class RNMBXPackage : TurboReactPackage() {
                 false,  // needsEagerInit
                 false,  // hasConstants
                 false,  // isCxxModule
-                isTurboModule // isTurboModule
+                true // isTurboModule
             )
             moduleInfos[RNMBXShapeSourceModule.NAME] = ReactModuleInfo(
                 RNMBXShapeSourceModule.NAME,
@@ -265,7 +282,7 @@ class RNMBXPackage : TurboReactPackage() {
                 false,  // needsEagerInit
                 false,  // hasConstants
                 false,  // isCxxModule
-                isTurboModule // isTurboModule
+                true // isTurboModule
             )
             moduleInfos[RNMBXImageModule.NAME] = ReactModuleInfo(
                 RNMBXImageModule.NAME,
@@ -274,7 +291,7 @@ class RNMBXPackage : TurboReactPackage() {
                 false,  // needsEagerInit
                 false,  // hasConstants
                 false,  // isCxxModule
-                isTurboModule // isTurboModule
+                true // isTurboModule
             )
             moduleInfos[RNMBXPointAnnotationModule.NAME] = ReactModuleInfo(
                 RNMBXPointAnnotationModule.NAME,
@@ -283,7 +300,7 @@ class RNMBXPackage : TurboReactPackage() {
                 false,  // needsEagerInit
                 false,  // hasConstants
                 false,  // isCxxModule
-                isTurboModule // isTurboModule
+                true // isTurboModule
             )
             moduleInfos[RNMBXMovePointShapeAnimatorModule.NAME] = ReactModuleInfo(
                 RNMBXMovePointShapeAnimatorModule.NAME,
@@ -292,7 +309,7 @@ class RNMBXPackage : TurboReactPackage() {
                 false,
                 false,
                 false,
-                isTurboModule
+                true // isTurboModule
             )
             moduleInfos[RNMBXChangeLineOffsetsShapeAnimatorModule.NAME] = ReactModuleInfo(
                 RNMBXChangeLineOffsetsShapeAnimatorModule.NAME,
@@ -301,7 +318,7 @@ class RNMBXPackage : TurboReactPackage() {
                 false,
                 false,
                 false,
-                isTurboModule
+                true // isTurboModule
             )
             moduleInfos
         }
