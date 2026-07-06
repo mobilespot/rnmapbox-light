@@ -23,11 +23,6 @@ export { default as Annotation } from './components/Annotation';
 export { default as Callout } from './components/Callout';
 export { default as StyleImport } from './components/StyleImport';
 export type { StandardStyleConfig } from './components/StyleImport';
-export {
-  default as UserLocation,
-  UserLocationRenderMode,
-} from './components/UserLocation';
-export { default as LocationPuck } from './components/LocationPuck';
 export { default as VectorSource } from './components/VectorSource';
 export { ShapeSource } from './components/ShapeSource';
 export { default as RasterSource } from './components/RasterSource';
@@ -50,14 +45,9 @@ export { default as RasterLayer } from './components/RasterLayer';
 export { default as RasterParticleLayer } from './components/RasterParticleLayer';
 export { default as HillshadeLayer } from './components/HillshadeLayer';
 export { default as BackgroundLayer } from './components/BackgroundLayer';
-export { default as CustomLocationProvider } from './components/CustomLocationProvider';
 export { Terrain } from './components/Terrain';
 export { default as CameraGestureObserver } from './components/CameraGestureObserver';
 export { type OnMapSteadyEvent } from './specs/RNMBXCameraGestureObserverNativeComponent';
-export {
-  default as locationManager,
-  type Location,
-} from './modules/location/locationManager';
 export {
   default as offlineManager,
   OfflineCreatePackOptions,
@@ -79,7 +69,6 @@ export {
 } from './classes';
 export { default as Style } from './components/Style';
 export { default as Logger, type LogLevel } from './utils/Logger';
-export { requestAndroidLocationPermissions } from './requestAndroidLocationPermissions';
 export { getAnnotationsLayerID } from './utils/getAnnotationsLayerID';
 export type {
   FillLayerStyleProps as FillLayerStyle,
@@ -104,7 +93,6 @@ import { AnimatedPoint } from './classes';
 import { UserTrackingMode } from './components/Camera';
 import MovePointShapeAnimator from './shapeAnimators/MovePointShapeAnimator';
 import ChangeLineOffsetsShapeAnimator from './shapeAnimators/ChangeLineOffsetsShapeAnimator';
-import LocationPuck from './components/LocationPuck';
 
 /** @deprecated This will be removed in a future release. Use `AnimatedPoint` instead. */
 
@@ -112,9 +100,6 @@ export const AnimatedMapPoint = deprecatedClass(
   AnimatedPoint,
   'AnimatedMapPoint is deprecated please use AnimatedPoint',
 );
-
-/** @deprecated NativeUserLocation will be removed in future release. Use `LocationPuck` instead. */
-export const NativeUserLocation = LocationPuck;
 
 // types:
 export enum StyleURL {

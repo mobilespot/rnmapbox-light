@@ -1,5 +1,4 @@
 import React from 'react';
-import { type TurboModule } from 'react-native';
 
 import { type NativeArg, runNativeMethod } from '../utils';
 
@@ -13,10 +12,10 @@ const NativeBridgeComponent = <
   BaseComponent extends new (...ags: any[]) => React.Component<Props>,
 >(
   Base: BaseComponent,
-  turboModule: TurboModule,
+  turboModule: any,
 ) =>
   class extends Base {
-    _turboModule: TurboModule;
+    _turboModule: any;
     _preRefMapMethodQueue: Array<{
       method: { name: string; args: NativeArg[] };
       resolver: (value: NativeArg) => void;

@@ -15,12 +15,8 @@ describe('Public Interface', () => {
       'Callout',
       'Camera',
       'CameraGestureObserver',
-      'UserLocation',
-      'NativeUserLocation', // deprecated
-      'LocationPuck',
       'StyleImport',
       'Viewport',
-      'CustomLocationProvider',
 
       // modules
       'offlineManager',
@@ -28,7 +24,6 @@ describe('Public Interface', () => {
       'offlineManagerLegacy',
       'OfflineCreatePackOptions',
       'snapshotManager',
-      'locationManager',
 
       // layers
       'FillLayer',
@@ -100,7 +95,6 @@ describe('Public Interface', () => {
       'getAccessToken',
       'setTelemetryEnabled',
       'setConnected',
-      'requestAndroidLocationPermissions',
       'getAnnotationsLayerID',
       'addCustomHeader',
       'removeCustomHeader',
